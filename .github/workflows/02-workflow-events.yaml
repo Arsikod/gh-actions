@@ -8,5 +8,4 @@ jobs:
     steps:
       - name: Show the trigger
         run: |
-          echo github.event_name
-          echo github.event.action
+          echo ${{github.event_name}}
