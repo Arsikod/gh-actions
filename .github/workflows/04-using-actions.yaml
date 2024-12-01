@@ -2,11 +2,30 @@ name: 04 - Using Actions
 on: push
 
 jobs:
-  build-react-app:
+  checkout-react-app:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Install dependencies
+        run: |
+          cd 04-using-actions/vite-project
+          pnpm install
+
+  print-folders:
+    runs-on: ubuntu-latest
+    steps:
       - name: Printing Folders
         run: |
           echo $GITHUB_WORKSPACE
