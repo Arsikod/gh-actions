@@ -26,6 +26,8 @@ jobs:
   print-folders:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Printing Folders
         run: |
           echo $GITHUB_WORKSPACE
