@@ -9,9 +9,14 @@ on:
 
 env:
   RUN_NAME: 06 - Contexts | DEBUG - ${{inputs.debug}}
+  MY_WORKFLOW_VAR: "workflow"
+  MY_OVERRITEN_VAR: "workflow"
 
 jobs:
   echo-data:
+    env:
+      MY_JOB_VAR: "job"
+      MY_OVERRITEN_VAR: "job"
     runs-on: ubuntu-latest
     steps:
       - name: Display information
@@ -26,3 +31,10 @@ jobs:
 
       - name: Retrieve variable
         run: echo "Variable is ${{vars.MY_VAR}}"
+
+      - name: Print Env Variables
+        env:
+          MY_OVERRITEN_VAR: "step"
+        run: |
+          echo "Workflow env: ${{env.MY_WORKFLOW_VAR}}"
+          echo "Overriten env: ${{env.MY_OVERRITEN_VAR}}"
