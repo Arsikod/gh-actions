@@ -1,12 +1,12 @@
 name: 06 - Contexts
-run-name: 06 - Contexts | DEBUG - ${{inputs.debug}}
+run-name: 06 - Contexts | Author - ${{inputs.author_name}}
 
 on:
   workflow_dispatch:
     inputs:
-      debug:
-        type: boolean
-        default: false
+      author_name:
+        type: string
+        default: "Nuset"
 
 env:
   MY_WORKFLOW_VAR: "workflow"
@@ -38,3 +38,8 @@ jobs:
         run: |
           echo "Workflow env: ${{env.MY_WORKFLOW_VAR}}"
           echo "Overriten env: ${{env.MY_OVERRITEN_VAR}}"
+  print-author:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print author name
+        run: echo "Author name is ${{inputs.author_name}}"
