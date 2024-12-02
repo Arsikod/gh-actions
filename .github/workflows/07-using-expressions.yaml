@@ -1,7 +1,6 @@
 name: 07 - Using Expressions
 run-name: Using Expressions | DEBUG - ${{inputs.debug && 'ON' || 'OFF'}}
 on:
-  push:
   workflow_dispatch:
     inputs:
       debug:
@@ -12,7 +11,7 @@ jobs:
   print-info:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug - Print start-up data
+      - name: "[Debug] - Print start-up data"
         if: ${{inputs.debug == true}}
         run: |
           echo "Debug value is: ${{inputs.debug}}"
@@ -21,7 +20,7 @@ jobs:
           echo "Commit SHA ${{github.sha}}"
           echo "Runner OS: ${{runner.os}}"
 
-      - name: Print when triggered from main
+      - name: "[Debug] - Print when triggered from main"
         if: ${{inputs.debug == true && github.ref_name == 'main' }}
         run: |
           echo "I was triggered from main"
