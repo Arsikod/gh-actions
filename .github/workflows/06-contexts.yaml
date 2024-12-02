@@ -1,4 +1,6 @@
 name: 06 - Contexts
+run-name: 06 - Contexts | DEBUG - ${{inputs.debug}}
+
 on:
   workflow_dispatch:
     inputs:
@@ -7,7 +9,6 @@ on:
         default: false
 
 env:
-  RUN_NAME: 06 - Contexts | DEBUG - ${{inputs.debug}}
   MY_WORKFLOW_VAR: "workflow"
   MY_OVERRITEN_VAR: "workflow"
 
