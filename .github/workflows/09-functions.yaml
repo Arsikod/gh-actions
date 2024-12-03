@@ -25,3 +25,6 @@ jobs:
       - name: I will execute when cancelled
         if: ${{cancelled()}}
         run: echo "Smth Cancelled"
+
+      - name: Sleep for 20 sec
+        run: sleep 20
