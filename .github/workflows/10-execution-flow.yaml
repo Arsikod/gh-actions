@@ -7,6 +7,12 @@ on:
         default: false
 
 jobs:
+  sonar-qube:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Sonar fails
+        run: exit 1
   lint-build:
     runs-on: ubuntu-latest
     steps:
