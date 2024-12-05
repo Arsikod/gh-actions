@@ -1,0 +1,52 @@
+name: 14 - Workflow with Artifacts
+on:
+  workflow_dispatch:
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react-app
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Download cached deps
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: react-app/node_modules
+          key: deps-node-modules-${{hashFiles('react-app/pnpm-lock.yaml')}}
+
+      - name: Install deps
+        if: ${{steps.cache.outputs.cache-hit != 'true'}}
+        run: pnpm install
+
+      - name: Build code
+        run: pnpm build
+
+      - name: Upload build files
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: react-app/build
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test-build
+    steps:
+      - name: Download build files
+        uses: actions/download-artifact@v4
+        with:
+          name: app
+          path: build

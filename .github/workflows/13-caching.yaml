@@ -57,6 +57,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -71,6 +76,11 @@ jobs:
         with:
           path: react-app/node_modules
           key: ${{steps.cache-key.outputs.CACHE_KEY}}
+
+      - name: Install dependencies
+        if: ${{steps.cache-key.outputs.cache-hit != 'true'}}
+        run: pnpm install
+
   linting:
     runs-on: ubuntu-latest
     needs: install-deps
