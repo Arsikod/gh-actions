@@ -64,7 +64,7 @@ jobs:
 
       - name: Calculate cache key
         id: cache-key
-        run: echo "CACHE_KEY=deps-node-modules-${{hashFiles('react-app/pnpm-lock.yaml')}}"
+        run: echo "CACHE_KEY=deps-node-modules-${{hashFiles('react-app/pnpm-lock.yaml')}}" >> "$GITHUB_OUTPUT"
 
       - name: Download cached deps
         uses: actions/cache@v3
