@@ -1,11 +1,16 @@
 name: 15 - Working with Matrices
 on:
   workflow_dispatch:
+    inputs:
+      fail-fast:
+        type: boolean
+        default: false
 
 jobs:
   backwards-compatibility:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: ${{inputs.fail-fast}}
       matrix:
         node-version: [19.x]
         os: [windows-latest]
@@ -15,6 +20,7 @@ jobs:
 
           - os: ubuntu-latest
             tag: experimental
+            node-version: 21.x
 
     name: ${{matrix.os}}-${{matrix.node-version}}
     steps:
@@ -22,5 +28,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{matrix.node-version}}
-      - name: Print OS and Node versions
+
+      - name: Fail if experimental
+        if: ${{matrix.tag == 'experimental'}}
+        run: echo exit 1
+
+      - name: Upload test results
         run: echo "Running on ${{matrix.os}} and node is ${{matrix.node-version}}"
