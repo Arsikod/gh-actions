@@ -31,10 +31,15 @@ runs:
       uses: actions/cache@v3
       with:
         path: ${{inputs.working-dir}}/node_modules
-        key: deps-node-modules-${{hashFiles(format("{0}/{1}", inputs.working-dir, 'pnpm-lock.yaml'))}}
+        key: deps-node-modules-${{hashFiles(format('{0}/{1}', inputs.working-dir, 'pnpm-lock.yaml'))}}
 
     - name: Install dependencies
       if: steps.cache-deps-id.outputs.cache-hit != 'true'
       shell: bash
       working-directory: ${{inputs.working-dir}}
-      run: pnpm install --${{inputs.target-env}}
+      run: |
+        if [ "${{ inputs.target-env }}" = "prod" ]; then
+          pnpm install --prod
+        else
+          pnpm install
+        fi
