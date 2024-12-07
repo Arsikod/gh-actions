@@ -1,0 +1,8 @@
+name: Update NPM deps
+description: "Checks if there are updates to NPM packages,
+  and create a PR with the updated
+  package.json and pnpm-lock.yaml files"
+
+runs:
+  using: node20
+  main: index.js
