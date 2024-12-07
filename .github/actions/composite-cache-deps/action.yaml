@@ -8,7 +8,7 @@ inputs:
     default: 20.x
   working-dir:
     description: "Working directory of the application"
-    default: "./"
+    default: "."
 
 runs:
   using: "composite"
@@ -31,7 +31,7 @@ runs:
         key: deps-node-modules-${{hashFiles('${{inputs.working-dir}}/pnpm-lock.yaml')}}
 
     - name: Install dependencies
-      if: ${{steps.cache.outputs.cache-hit != 'true'}}
+      if: steps.cache-deps-id.outputs.cache-hit != 'true'
       shell: bash
       working-directory: ${{inputs.working-dir}}
       run: pnpm install
