@@ -37,4 +37,6 @@ runs:
       if: steps.cache-deps-id.outputs.cache-hit != 'true'
       shell: bash
       working-directory: ${{inputs.working-dir}}
-      run: ${{inputs.target-env == 'dev' && 'pnpm install' || 'pnpm install --prod'}}
+      run: |
+        echo ${{inputs.target-env}}
+        ${{inputs.target-env == 'dev' && 'pnpm install' || 'pnpm install --prod'}}
